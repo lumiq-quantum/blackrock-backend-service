@@ -16,42 +16,66 @@ export class AppService {
   }
 
   async getIncidents() {
-    let response = await this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
-      headers: {
-        "Authorization": this.PAGER_DUTY_TOKEN
+    try {
+      let response = await this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
+        headers: {
+          "Authorization": this.PAGER_DUTY_TOKEN
+        }
+      }).toPromise()
+  
+      let incidents = response?.data
+      return {
+        "status": 200,
+        "data": incidents
       }
-    }).toPromise()
-
-    let incidents = response.data
-    return incidents
+    } catch (error) {
+      return {
+        "status": 500,
+        "data": error
+      }
+    }
   }
 
   async getIncidentById(id) {
-    let response = await this.httpService.get(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
-      headers: {
-        "Authorization": this.PAGER_DUTY_TOKEN
-      }
-    }).toPromise()
+    try {
+      let response = await this.httpService.get(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
+        headers: {
+          "Authorization": this.PAGER_DUTY_TOKEN
+        }
+      }).toPromise()
 
-    let incidents = response.data
-    return incidents
+      let incidents = response.data
+      return incidents
+    } catch (error) {
+      return {
+        "status": 500,
+        "data": error
+      }
+    }
   }
 
   async updateIncidentById(id) {
-    let response = await this.httpService.put(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
+    try{
+      let response = await this.httpService.put(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
         "incident": {
-            "type": "incident",
-            "title": "Updated By Pryzm - Empower"
+          "type": "incident",
+          "title": "Updated By Pryzm - Empower"
         }
-    }, {
-      headers: {
-        "Authorization": this.PAGER_DUTY_TOKEN,
-        "from": this.PAGER_DUTY_USER_EMAIL
+      }, {
+        headers: {
+          "Authorization": this.PAGER_DUTY_TOKEN,
+          "from": this.PAGER_DUTY_USER_EMAIL
+        }
+      }).toPromise()
+      
+      let incidents = response.data
+      return incidents
+    } catch (error) {
+      return {
+        "status": 500,
+        "data": error
       }
-    }).toPromise()
-
-    let incidents = response.data
-    return incidents
+    }
   }
   
 }
