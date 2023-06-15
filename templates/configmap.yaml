@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blackrock-backend-configmap
+data:
+  PAGER_DUTY_API_ENDPOINT: {{ .Values.pagerDutyApiEndpoint }}
+  PAGER_DUTY_TOKEN: {{ .Values.pagerDutyToken }}
+  PAGER_DUTY_USER_EMAIL: {{ .Values.pagerDutyUserEmail }}
