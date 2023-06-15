@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blackrock-backend-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: blackrock-backend-service
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        app: blackrock-backend-service
+    spec:     # pod spec                  
+      containers: 
+      - name: blackrock-backend-service
+        image: ghcr.io/lumiq-quantum/blackrock-backend-service:latest # image we pushed
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PAGER_DUTY_API_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: PAGER_DUTY_API_ENDPOINT
+        - name: PAGER_DUTY_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: PAGER_DUTY_TOKEN
+        - name: PAGER_DUTY_USER_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: PAGER_DUTY_USER_EMAIL

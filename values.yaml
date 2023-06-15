@@ -1,0 +1,4 @@
+replicaCount: 1
+pagerDutyApiEndpoint: https://api.pagerduty.com/incidents
+pagerDutyToken: "<YOUR-API-TOKEN-HERE>"
+pagerDutyUserEmail: "<PAGER-DUTY-USER-EMAIL-ID>"
