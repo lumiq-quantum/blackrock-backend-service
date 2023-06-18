@@ -3,8 +3,7 @@ kind: VirtualService
 metadata:
   name: blackrock-backend-service
 spec:
-  gateways:
-  - valueFrom: [ {{ .Values.replicaCount }} ]
+  gateways: [ {{ .Values.replicaCount }} ]
   hosts:
   - '*'
   http:
