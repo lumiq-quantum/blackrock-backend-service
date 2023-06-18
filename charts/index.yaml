@@ -3,11 +3,11 @@ entries:
   blackrock-backend-service:
   - apiVersion: v1
     appVersion: 0.1.0
-    created: "2023-06-18T15:11:52.084849+05:30"
+    created: "2023-06-18T15:18:06.036153+05:30"
     description: Backend Service to fetch PD incidents
-    digest: 3dd0684f1cdd2b2167314d81393770fbb064cf02019b25d87715bd4d1671aacb
+    digest: 2e1590116909b118a38c3e4503fda624e09f45dd593993735c6712a14d58ccf0
     name: blackrock-backend-service
     urls:
     - blackrock-backend-service-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-18T15:11:52.084451+05:30"
+generated: "2023-06-18T15:18:06.035664+05:30"
