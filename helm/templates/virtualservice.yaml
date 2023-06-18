@@ -4,10 +4,7 @@ metadata:
   name: blackrock-backend-service
 spec:
   gateways:
-  - valueFrom:
-      configMapKeyRef:
-        name: blackrock-backend-configmap
-        key: GATEWAY
+  - valueFrom: [ {{ .Values.replicaCount }} ]
   hosts:
   - '*'
   http:
