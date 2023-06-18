@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: blackrock-backend-service
+spec:
+  gateways:
+  - {{ .Values.gateway }}
+  hosts:
+  - {{ .Values.host }}
+  http:
+  - match:
+    - uri:
+        prefix: /blackrock/
+    - uri:
+        prefix: /blackrock
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        host: blackrock-backend-service
+        port:
+          number: 80
