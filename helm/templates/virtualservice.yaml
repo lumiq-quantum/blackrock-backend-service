@@ -4,9 +4,12 @@ metadata:
   name: blackrock-backend-service
 spec:
   gateways:
-  - {{ .Values.gateway }}
+  - valueFrom:
+      configMapKeyRef:
+        name: blackrock-backend-configmap
+        key: GATEWAY
   hosts:
-  - {{ .Values.host }}
+  - '*'
   http:
   - match:
     - uri:

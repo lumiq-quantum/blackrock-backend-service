@@ -6,3 +6,4 @@ data:
   PAGER_DUTY_API_ENDPOINT: {{ .Values.pagerDutyApiEndpoint }}
   PAGER_DUTY_TOKEN: {{ .Values.pagerDutyToken }}
   PAGER_DUTY_USER_EMAIL: {{ .Values.pagerDutyUserEmail }}
+  GATEWAY: 'test-gateway'
