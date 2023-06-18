@@ -3,4 +3,4 @@ pagerDutyApiEndpoint: https://api.pagerduty.com/incidents
 pagerDutyToken: "<YOUR-API-TOKEN-HERE>"
 pagerDutyUserEmail: "<PAGER-DUTY-USER-EMAIL-ID>"
 gateway: "test-gateway"
-host: "*"
+host: "'*'"
