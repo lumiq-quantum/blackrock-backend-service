@@ -4,3 +4,4 @@ pagerDutyToken: "<YOUR-API-TOKEN-HERE>"
 pagerDutyUserEmail: "<PAGER-DUTY-USER-EMAIL-ID>"
 gateway: "test-gateway"
 host: "'*'"
+image: ghcr.io/lumiq-quantum/blackrock-backend-service:latest

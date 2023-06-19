@@ -9,12 +9,12 @@ spec:
       app: blackrock-backend-service
   template:
     metadata:
-      labels: # labels to select/identify the deployment
+      labels:
         app: blackrock-backend-service
-    spec:     # pod spec                  
+    spec:
       containers: 
       - name: blackrock-backend-service
-        image: ghcr.io/lumiq-quantum/blackrock-backend-service:latest # image we pushed
+        image: {{ .Values.image }}
         ports:
         - containerPort: 3000
         env:
