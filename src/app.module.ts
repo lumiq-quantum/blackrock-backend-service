@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppPagerDutyController } from './PagerDuty/app.controller';
+import { AppPagerDutyService } from './PagerDuty/app.service';
+import { AppServiceNowController } from './ServiceNow/app.controller';
+import { AppServiceNowService } from './ServiceNow/app.service';
 import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 
@@ -9,7 +11,7 @@ import { HttpModule } from '@nestjs/axios';
     ConfigModule.forRoot(),
     HttpModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppPagerDutyController, AppServiceNowController],
+  providers: [AppPagerDutyService, AppServiceNowService],
 })
-export class AppModule {}
+export class AppModule { }

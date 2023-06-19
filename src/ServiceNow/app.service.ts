@@ -1,0 +1,86 @@
+
+import { HttpService } from '@nestjs/axios';
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppServiceNowService {
+
+    private SERVICE_NOW_API_ENDPOINT = process.env.SERVICE_NOW_API_ENDPOINT
+    private SERVICE_NOW_TOKEN = process.env.SERVICE_NOW_TOKEN
+    private SERVICE_NOW_USER_EMAIL = process.env.SERVICE_NOW_USER_EMAIL
+
+    constructor(private readonly httpService: HttpService) {
+    }
+
+    getHello(): string {
+        return 'Hello World!';
+    }
+
+    async getIncidents() {
+        try {
+            const response = await this.httpService.get(this.SERVICE_NOW_API_ENDPOINT, {
+                auth: {
+                    username: process.env.SERVICE_NOW_USERNAME,
+                    password: process.env.SERVICE_NOW_PASSWORD
+
+                }
+            }).toPromise()
+
+            const incidents = response?.data
+            return {
+                "status": 200,
+                "data": incidents
+            }
+        } catch (error) {
+            return {
+                "status": 500,
+                "data": error
+            }
+        }
+    }
+
+    async getIncidentById(id) {
+        try {
+            const response = await this.httpService.get(`${this.SERVICE_NOW_API_ENDPOINT}/${id}`, {
+                auth: {
+                    username: process.env.SERVICE_NOW_USERNAME,
+                    password: process.env.SERVICE_NOW_PASSWORD
+
+                }
+            }).toPromise()
+
+            const incidents = response.data
+            return incidents
+        } catch (error) {
+            return {
+                "status": 500,
+                "data": error
+            }
+        }
+    }
+
+    async updateIncidentById(id) {
+        try {
+            const response = await this.httpService.put(`${this.SERVICE_NOW_API_ENDPOINT}/${id}`, {
+                "incident": {
+                    "type": "incident",
+                    "title": "Updated By Pryzm - Empower"
+                }
+            }, {
+                auth: {
+                    username: process.env.SERVICE_NOW_USERNAME,
+                    password: process.env.SERVICE_NOW_PASSWORD
+                }
+            }).toPromise()
+
+            const incidents = response.data
+            return incidents
+        } catch (error) {
+            return {
+                "status": 500,
+                "data": error
+            }
+        }
+    }
+
+}
