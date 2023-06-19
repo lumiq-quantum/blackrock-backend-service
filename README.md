@@ -21,9 +21,11 @@ $ helm install blackrock-backend-service lumiq/blackrock-backend-service \
     --set pagerDutyUserEmail="<YOUR-PAGERDUTY-ENDPOINT>" \
     --set gateway="<GATEWAY-NAME>" \
     --set host="'<YOUR-HOST>'" \
+    --set image="<DOCKER-IMAGE-LOCATION>"
     -n lumiq-blackrock
-
 ```
+
+For the default values check the values.yaml file below.
 
 values.yaml file -> <a href="/helm/values.yaml">values.yaml</a>
 
