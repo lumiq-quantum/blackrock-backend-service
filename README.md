@@ -19,6 +19,9 @@ $ helm install blackrock-backend-service lumiq/blackrock-backend-service \
     --set pagerDutyApiEndpoint="<YOUR-PAGERDUTY-ENDPOINT>" \
     --set pagerDutyToken="<YOUR-PAGERDUTY-ENDPOINT>" \
     --set pagerDutyUserEmail="<YOUR-PAGERDUTY-ENDPOINT>" \
+    --set serviceNowApiEndpoint="<YOUR-SERVICE-NOW-ENDPOINT>" \
+    --set serviceNowUserName="<YOUR-SERVICE-NOW-USERNAME>" \
+    --set serviceNowPassword="<YOUR-SERVICE-NOW-PASSWORD>" \
     --set gateway="<GATEWAY-NAME>" \
     --set host="'<YOUR-HOST>'" \
     --set image="<DOCKER-IMAGE-LOCATION>"
