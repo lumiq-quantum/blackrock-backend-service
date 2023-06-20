@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: test-gateway
+spec:
+  selector:
+    app: istio-ingressgateway
+  servers:
+  - hosts:
+    - '*'
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - '*'
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: tls-secret
+      mode: SIMPLE
