@@ -5,15 +5,11 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppServiceNowService {
 
-    private SERVICE_NOW_API_ENDPOINT = process.env.SERVICE_NOW_API_ENDPOINT
+    private SERVICE_NOW_API_ENDPOINT = process.env.SERVICE_NOW_API_ENDPOINT + '/api/now/table/incident'
     private SERVICE_NOW_TOKEN = process.env.SERVICE_NOW_TOKEN
     private SERVICE_NOW_USER_EMAIL = process.env.SERVICE_NOW_USER_EMAIL
 
     constructor(private readonly httpService: HttpService) {
-    }
-
-    getHello(): string {
-        return 'Hello World!';
     }
 
     async getIncidents() {
@@ -61,11 +57,8 @@ export class AppServiceNowService {
 
     async updateIncidentById(id) {
         try {
-            const response = await this.httpService.put(`${this.SERVICE_NOW_API_ENDPOINT}/${id}`, {
-                "incident": {
-                    "type": "incident",
-                    "title": "Updated By Pryzm - Empower"
-                }
+            const response = await this.httpService.put(`${this.SERVICE_NOW_API_ENDPOINT}/${id}?sysparm_display_value=true`, {
+                "comments": "Updated By Pryzm - Empower"
             }, {
                 auth: {
                     username: process.env.SERVICE_NOW_USERNAME,

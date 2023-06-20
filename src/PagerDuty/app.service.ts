@@ -5,15 +5,11 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppPagerDutyService {
 
-  private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT
+  private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT + '/incidents'
   private PAGER_DUTY_TOKEN = process.env.PAGER_DUTY_TOKEN
   private PAGER_DUTY_USER_EMAIL = process.env.PAGER_DUTY_USER_EMAIL
 
   constructor(private readonly httpService: HttpService) {
-  }
-
-  getHello(): string {
-    return 'Hello World!';
   }
 
   async getIncidents() {

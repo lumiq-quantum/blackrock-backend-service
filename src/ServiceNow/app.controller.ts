@@ -2,14 +2,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppServiceNowService } from './app.service';
 
-@Controller('/serviceNow')
+@Controller('/servicenow')
 export class AppServiceNowController {
     constructor(private readonly appServiceNowService: AppServiceNowService) { }
-
-    @Get()
-    getHello(): string {
-        return this.appServiceNowService.getHello();
-    }
 
     @Get('/incidents')
     async getIncidents() {

@@ -2,14 +2,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppPagerDutyService } from './app.service';
 
-@Controller('/pagerDuty')
+@Controller('/pagerduty')
 export class AppPagerDutyController {
   constructor(private readonly appPagerDutyService: AppPagerDutyService) { }
-
-  @Get()
-  getHello(): string {
-    return this.appPagerDutyService.getHello();
-  }
 
   @Get('/incidents')
   async getIncidents() {

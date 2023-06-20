@@ -33,3 +33,21 @@ spec:
             configMapKeyRef:
               name: blackrock-backend-configmap
               key: PAGER_DUTY_USER_EMAIL
+
+        - name : SERVICE_NOW_API_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: SERVICE_NOW_API_ENDPOINT
+        
+        - name : SERVICE_NOW_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: SERVICE_NOW_USERNAME
+        
+        - name : SERVICE_NOW_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: SERVICE_NOW_PASSWORD
