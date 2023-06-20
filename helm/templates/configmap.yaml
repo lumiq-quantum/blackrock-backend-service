@@ -6,3 +6,9 @@ data:
   PAGER_DUTY_API_ENDPOINT: {{ .Values.pagerDutyApiEndpoint }}
   PAGER_DUTY_TOKEN: {{ .Values.pagerDutyToken }}
   PAGER_DUTY_USER_EMAIL: {{ .Values.pagerDutyUserEmail }}
+
+  SERVICE_NOW_API_ENDPOINT: {{ .Values.serviceNowApiEndpoint }}
+  SERVICE_NOW_USERNAME: {{ .Values.serviceNowUsername }}
+  SERVICE_NOW_PASSWORD: {{ .Values.serviceNowPassword }}
+
+  
