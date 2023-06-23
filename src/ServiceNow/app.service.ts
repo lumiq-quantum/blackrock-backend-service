@@ -1,25 +1,30 @@
 
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import * as https from 'https';
 
 @Injectable()
 export class AppServiceNowService {
 
     private SERVICE_NOW_API_ENDPOINT = process.env.SERVICE_NOW_API_ENDPOINT + '/api/now/table/incident'
-    private SERVICE_NOW_TOKEN = process.env.SERVICE_NOW_TOKEN
-    private SERVICE_NOW_USER_EMAIL = process.env.SERVICE_NOW_USER_EMAIL
+    private SERVICE_NOW_USERNAME = process.env.SERVICE_NOW_USERNAME
+    private SERVICE_NOW_PASSWORD = process.env.SERVICE_NOW_PASSWORD
+    httpsAgent:any;
 
     constructor(private readonly httpService: HttpService) {
+        this.httpsAgent = new https.Agent({  
+            rejectUnauthorized: false
+        })
     }
 
     async getIncidents() {
         try {
             const response = await this.httpService.get(this.SERVICE_NOW_API_ENDPOINT, {
                 auth: {
-                    username: process.env.SERVICE_NOW_USERNAME,
-                    password: process.env.SERVICE_NOW_PASSWORD
-
-                }
+                    username: this.SERVICE_NOW_USERNAME,
+                    password: this.SERVICE_NOW_PASSWORD
+                },
+                httpsAgent: this.httpsAgent
             }).toPromise()
 
             const incidents = response?.data
@@ -39,10 +44,10 @@ export class AppServiceNowService {
         try {
             const response = await this.httpService.get(`${this.SERVICE_NOW_API_ENDPOINT}/${id}?sysparm_display_value=true`, {
                 auth: {
-                    username: process.env.SERVICE_NOW_USERNAME,
-                    password: process.env.SERVICE_NOW_PASSWORD
-
-                }
+                    username: this.SERVICE_NOW_USERNAME,
+                    password: this.SERVICE_NOW_PASSWORD
+                },
+                httpsAgent: this.httpsAgent
             }).toPromise()
 
             const incidents = response.data
@@ -61,9 +66,10 @@ export class AppServiceNowService {
                 "comments": "Updated By Pryzm - Empower"
             }, {
                 auth: {
-                    username: process.env.SERVICE_NOW_USERNAME,
-                    password: process.env.SERVICE_NOW_PASSWORD
-                }
+                    username: this.SERVICE_NOW_USERNAME,
+                    password: this.SERVICE_NOW_PASSWORD
+                },
+                httpsAgent: this.httpsAgent
             }).toPromise()
 
             const incidents = response.data

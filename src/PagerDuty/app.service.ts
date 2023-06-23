@@ -1,6 +1,7 @@
 
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import * as https from 'https';
 
 @Injectable()
 export class AppPagerDutyService {
@@ -8,8 +9,12 @@ export class AppPagerDutyService {
   private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT + '/incidents'
   private PAGER_DUTY_TOKEN = process.env.PAGER_DUTY_TOKEN
   private PAGER_DUTY_USER_EMAIL = process.env.PAGER_DUTY_USER_EMAIL
+  httpsAgent:any;
 
   constructor(private readonly httpService: HttpService) {
+    this.httpsAgent = new https.Agent({  
+      rejectUnauthorized: false
+    })
   }
 
   async getIncidents() {
@@ -17,7 +22,8 @@ export class AppPagerDutyService {
       const response = await this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
         headers: {
           "Authorization": this.PAGER_DUTY_TOKEN
-        }
+        },
+        httpsAgent: this.httpsAgent
       }).toPromise()
 
       const incidents = response?.data
@@ -38,7 +44,8 @@ export class AppPagerDutyService {
       const response = await this.httpService.get(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
         headers: {
           "Authorization": this.PAGER_DUTY_TOKEN
-        }
+        },
+        httpsAgent: this.httpsAgent
       }).toPromise()
 
       const incidents = response.data
@@ -62,7 +69,8 @@ export class AppPagerDutyService {
         headers: {
           "Authorization": this.PAGER_DUTY_TOKEN,
           "from": this.PAGER_DUTY_USER_EMAIL
-        }
+        },
+        httpsAgent: this.httpsAgent
       }).toPromise()
 
       const incidents = response.data
