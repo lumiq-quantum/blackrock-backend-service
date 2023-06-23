@@ -10,5 +10,8 @@ data:
   SERVICE_NOW_API_ENDPOINT: {{ .Values.serviceNowApiEndpoint }}
   SERVICE_NOW_USERNAME: {{ .Values.serviceNowUsername }}
   SERVICE_NOW_PASSWORD: {{ .Values.serviceNowPassword }}
+  HTTP_PROXY: {{ .Values.httpProxy }}
+  HTTPS_PROXY: {{ .Values.httpsProxy }}
+  NO_PROXY: {{ .Values.noProxy }}
 
   
