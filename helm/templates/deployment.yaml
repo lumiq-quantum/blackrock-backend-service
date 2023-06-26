@@ -70,4 +70,15 @@ spec:
               name: blackrock-backend-configmap
               key: NO_PROXY
         
-        
+        volumeMounts:
+        - name: config
+          mountPath: "/config"
+          readOnly: true
+
+      volumes:
+      - name: config
+        configMap:
+          name: blackrock-backend-configmap
+          items:
+          - key: "ca.cert"
+            path: "ca.cert"
