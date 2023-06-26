@@ -13,5 +13,6 @@ data:
   HTTP_PROXY: {{ .Values.httpProxy }}
   HTTPS_PROXY: {{ .Values.httpsProxy }}
   NO_PROXY: {{ .Values.noProxy }}
+  ca.cert: {{ .Values.caCert }}
 
   
