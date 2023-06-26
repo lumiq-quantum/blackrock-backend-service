@@ -12,7 +12,4 @@ image: ghcr.io/lumiq-quantum/blackrock-backend-service:latest
 httpProxy: ''
 httpsProxy: ''
 noProxy: ''
-caCert: |
-  -----BEGIN CERTIFICATE-----
-  <YOUR-CA-CERTIFICATE>
-  -----END CERTIFICATE-----
+caCert: '<YOUR-CA-CERTIFICATE>'
