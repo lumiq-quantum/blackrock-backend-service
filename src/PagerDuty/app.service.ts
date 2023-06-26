@@ -13,10 +13,15 @@ export class AppPagerDutyService {
   httpsAgent:any;
 
   constructor(private readonly httpService: HttpService) {
-    let caCert = fs.readFileSync('/config/ca.cert')
-    console.log(caCert)
+    let caCert
+    try {
+      caCert = fs.readFileSync('/config/ca.cert')
+      console.log(caCert)
+    } catch (error) {
+      console.log("NO CA CERT", error)
+    }
     this.httpsAgent = new https.Agent({  
-      // rejectUnauthorized: false,
+      rejectUnauthorized: false,
       ca: caCert
     })
   }
