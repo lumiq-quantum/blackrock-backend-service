@@ -7,13 +7,12 @@ import * as fs from 'fs';
 @Injectable()
 export class AppPagerDutyService {
 
-  private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT + '/test.json'
+  private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT + '/incidents'
   private PAGER_DUTY_TOKEN = process.env.PAGER_DUTY_TOKEN
   private PAGER_DUTY_USER_EMAIL = process.env.PAGER_DUTY_USER_EMAIL
   httpsAgent:any;
 
   constructor(private readonly httpService: HttpService) {
-    // console.log(a)
     let caCert = fs.readFileSync('/config/ca.cert')
     console.log(caCert)
     this.httpsAgent = new https.Agent({  
