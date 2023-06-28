@@ -11,6 +11,16 @@ export class AppPagerDutyController {
     return await this.appPagerDutyService.getIncidents();
   }
 
+  @Get('/incidents-fetch')
+  async getIncidentsFetch() {
+    return await this.appPagerDutyService.getIncidentsFetch();
+  }
+
+  @Get('/incidents-https')
+  async getIncidentsHttps() {
+    return await this.appPagerDutyService.getIncidentsHttps();
+  }
+
   @Get('/incidents/:id')
   getIncidentById(@Param() params: any) {
     return this.appPagerDutyService.getIncidentById(params.id);

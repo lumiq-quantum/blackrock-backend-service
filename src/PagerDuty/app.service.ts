@@ -3,6 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import * as https from 'https';
 import * as fs from 'fs';
+import fetch from 'node-fetch';
 
 @Injectable()
 export class AppPagerDutyService {
@@ -21,8 +22,8 @@ export class AppPagerDutyService {
       console.log("NO CA CERT", error)
     }
     this.httpsAgent = new https.Agent({  
-      rejectUnauthorized: false,
-      ca: caCert
+      rejectUnauthorized: false
+      // ca: caCert
     })
   }
 
@@ -45,6 +46,50 @@ export class AppPagerDutyService {
         "status": 500,
         "data": error
       }
+    }
+  }
+
+  async getIncidentsFetch() {
+    try {
+
+      const response = await fetch(this.PAGER_DUTY_API_ENDPOINT, {
+        agent: this.httpsAgent,
+        headers: {
+          'Authorization': this.PAGER_DUTY_TOKEN
+        }
+      });
+      const data = await response.json();
+      return data
+    } catch (error) {
+      return {
+        "status": 500,
+        "data": error
+      }
+    }
+  }
+
+  async getIncidentsHttps() {
+    let options = {
+      host: 'api.pagerduty.com',
+      port: 443,
+      path: '/incidents',
+      method: 'GET',
+      agent: this.httpsAgent,
+      headers: {
+        'Authorization': this.PAGER_DUTY_TOKEN
+      }
+    }
+
+    let re = await https.get(options, (res)=>{
+
+      res.on('data', function (chunk) {
+        console.log('BODY: ' + chunk);
+      });
+      // console.log(res);
+    })
+    // console.log(re)
+    return {
+      "hello": "world"
     }
   }
 
