@@ -53,23 +53,6 @@ spec:
               name: blackrock-backend-configmap
               key: SERVICE_NOW_PASSWORD
 
-        - name: HTTP_PROXY
-          valueFrom:
-            configMapKeyRef:
-              name: blackrock-backend-configmap
-              key: HTTP_PROXY
-
-        - name: HTTPS_PROXY
-          valueFrom:
-            configMapKeyRef:
-              name: blackrock-backend-configmap
-              key: HTTPS_PROXY
-        
-        - name: NO_PROXY
-          valueFrom:
-            configMapKeyRef:
-              name: blackrock-backend-configmap
-              key: NO_PROXY
         
         volumeMounts:
         - name: config
