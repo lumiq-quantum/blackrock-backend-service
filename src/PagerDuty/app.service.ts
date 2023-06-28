@@ -14,20 +14,21 @@ export class AppPagerDutyService {
   private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT + '/incidents'
   private PAGER_DUTY_TOKEN = process.env.PAGER_DUTY_TOKEN
   private PAGER_DUTY_USER_EMAIL = process.env.PAGER_DUTY_USER_EMAIL
+  private CERT_PATH = process.env.CERT_PATH
   httpsAgent:any;
   pd;
   
   constructor(private readonly httpService: HttpService) {
     let caCert
     try {
-      caCert = fs.readFileSync('/config/ca.cert')
+      caCert = fs.readFileSync(this.CERT_PATH)
       console.log(caCert)
     } catch (error) {
       console.log("NO CA CERT", error)
     }
     this.httpsAgent = new https.Agent({  
-      rejectUnauthorized: false
-      // ca: caCert
+      rejectUnauthorized: false,
+      ca: caCert
     })
 
     try {
@@ -107,9 +108,14 @@ export class AppPagerDutyService {
   async getIncidentsPD() {
     try {
       let data = await this.pd.get('/incidents')
+      console.log(data)
       return data.data
     } catch (error) {
-      console.log(error)      
+      console.log(error)
+      return {
+        "status": 500,
+        "data": error
+      }
     }
 
   }
