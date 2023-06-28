@@ -4,15 +4,19 @@ import { Injectable } from '@nestjs/common';
 import * as https from 'https';
 import * as fs from 'fs';
 import fetch from 'node-fetch';
+import {api} from '@pagerduty/pdjs';
+
+
 
 @Injectable()
 export class AppPagerDutyService {
-
+  
   private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT + '/incidents'
   private PAGER_DUTY_TOKEN = process.env.PAGER_DUTY_TOKEN
   private PAGER_DUTY_USER_EMAIL = process.env.PAGER_DUTY_USER_EMAIL
   httpsAgent:any;
-
+  pd;
+  
   constructor(private readonly httpService: HttpService) {
     let caCert
     try {
@@ -25,6 +29,13 @@ export class AppPagerDutyService {
       rejectUnauthorized: false
       // ca: caCert
     })
+
+    try {
+      let token = this.PAGER_DUTY_TOKEN.split("=")[1]
+      this.pd = api({token});
+    } catch (error) {
+      console.log("ERROR CREATING PD INSTANCE", error)
+    }
   }
 
   async getIncidents() {
@@ -91,6 +102,16 @@ export class AppPagerDutyService {
     return {
       "hello": "world"
     }
+  }
+
+  async getIncidentsPD() {
+    try {
+      let data = await this.pd.get('/incidents')
+      return data.data
+    } catch (error) {
+      console.log(error)      
+    }
+
   }
 
   async getIncidentById(id) {
