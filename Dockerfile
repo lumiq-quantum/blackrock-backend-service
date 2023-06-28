@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:python3.8-nodejs18
+FROM nikolaik/python-nodejs:python3.8-nodejs16
 RUN pip install requests
 WORKDIR /usr/app
 COPY ./ /usr/app
