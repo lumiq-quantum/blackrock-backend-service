@@ -14,22 +14,17 @@ export class AppPagerDutyService {
   private PAGER_DUTY_API_ENDPOINT = process.env.PAGER_DUTY_API_ENDPOINT + '/incidents'
   private PAGER_DUTY_TOKEN = process.env.PAGER_DUTY_TOKEN
   private PAGER_DUTY_USER_EMAIL = process.env.PAGER_DUTY_USER_EMAIL
-  private CERT_PATH = process.env.CERT_PATH
+  private NODE_TLS_REJECT_UNAUTHORIZED = process.env.NODE_TLS_REJECT_UNAUTHORIZED
+  
   httpsAgent:any;
   pd;
   
   constructor(private readonly httpService: HttpService) {
-    let caCert
-    try {
-      caCert = fs.readFileSync(this.CERT_PATH)
-      console.log(caCert)
-    } catch (error) {
-      console.log("NO CA CERT", error)
-    }
     this.httpsAgent = new https.Agent({  
-      rejectUnauthorized: false,
-      ca: caCert
+      rejectUnauthorized: false
     })
+
+    console.log(this.NODE_TLS_REJECT_UNAUTHORIZED, "NODE_TLS_REJECT_UNAUTHORIZED")
 
     try {
       let token = this.PAGER_DUTY_TOKEN.split("=")[1]
@@ -43,7 +38,8 @@ export class AppPagerDutyService {
     try {
       const response = await this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
         headers: {
-          "Authorization": this.PAGER_DUTY_TOKEN
+          "Authorization": this.PAGER_DUTY_TOKEN,
+          "Accept": "application/vnd.pagerduty+json;version=2"
         },
         httpsAgent: this.httpsAgent
       }).toPromise()
@@ -67,7 +63,8 @@ export class AppPagerDutyService {
       const response = await fetch(this.PAGER_DUTY_API_ENDPOINT, {
         agent: this.httpsAgent,
         headers: {
-          'Authorization': this.PAGER_DUTY_TOKEN
+          'Authorization': this.PAGER_DUTY_TOKEN,
+          "Accept": "application/vnd.pagerduty+json;version=2"
         }
       });
       const data = await response.json();
@@ -88,7 +85,8 @@ export class AppPagerDutyService {
       method: 'GET',
       agent: this.httpsAgent,
       headers: {
-        'Authorization': this.PAGER_DUTY_TOKEN
+        "Authorization": this.PAGER_DUTY_TOKEN,
+        "Accept": "application/vnd.pagerduty+json;version=2"
       }
     }
 
@@ -124,7 +122,8 @@ export class AppPagerDutyService {
     try {
       const response = await this.httpService.get(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
         headers: {
-          "Authorization": this.PAGER_DUTY_TOKEN
+          "Authorization": this.PAGER_DUTY_TOKEN,
+          "Accept": "application/vnd.pagerduty+json;version=2"
         },
         httpsAgent: this.httpsAgent
       }).toPromise()
@@ -149,7 +148,8 @@ export class AppPagerDutyService {
       }, {
         headers: {
           "Authorization": this.PAGER_DUTY_TOKEN,
-          "from": this.PAGER_DUTY_USER_EMAIL
+          "from": this.PAGER_DUTY_USER_EMAIL,
+          "Accept": "application/vnd.pagerduty+json;version=2"
         },
         httpsAgent: this.httpsAgent
       }).toPromise()
