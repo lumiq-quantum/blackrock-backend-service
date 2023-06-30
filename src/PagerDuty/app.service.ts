@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import fetch from 'node-fetch';
 import {api} from '@pagerduty/pdjs';
 import * as request from 'request';
+import { firstValueFrom } from 'rxjs';
 
 
 
@@ -37,13 +38,15 @@ export class AppPagerDutyService {
 
   async getIncidents() {
     try {
-      const response = await this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
-        headers: {
-          "Authorization": this.PAGER_DUTY_TOKEN,
-          "Accept": "application/vnd.pagerduty+json;version=2"
-        },
-        httpsAgent: this.httpsAgent
-      }).toPromise()
+      const response = await firstValueFrom( 
+        this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
+          headers: {
+            "Authorization": this.PAGER_DUTY_TOKEN,
+            "Accept": "application/vnd.pagerduty+json;version=2"
+          },
+          httpsAgent: this.httpsAgent
+        })
+      )
 
       const incidents = response?.data
       return {
