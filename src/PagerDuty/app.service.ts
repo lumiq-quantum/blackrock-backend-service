@@ -5,6 +5,7 @@ import * as https from 'https';
 import * as fs from 'fs';
 import fetch from 'node-fetch';
 import {api} from '@pagerduty/pdjs';
+import * as request from 'request';
 
 
 
@@ -162,6 +163,39 @@ export class AppPagerDutyService {
         "data": error
       }
     }
+  }
+
+  async getIncidentRequest() {
+    try {
+      const options = {
+        method: 'GET',
+        url: 'https://api.pagerduty.com/incidents',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/vnd.pagerduty+json;version=2',
+          Authorization: this.PAGER_DUTY_TOKEN
+        }
+      };
+      
+      let data = await this.requestPackage(options)
+      return data
+    } catch (error) {
+      return {
+        "status": "500",
+        "error": error
+      }
+    }
+    
+  }
+
+  async requestPackage(options) {
+    return new Promise((resolve,reject)=>{
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+
+        resolve(body)
+      });
+    })
   }
 
 }
