@@ -30,6 +30,7 @@
     "https": "^1.0.0",
     "node-fetch": "^2.6.11",
     "reflect-metadata": "^0.1.13",
+    "request": "^2.88.2",
     "rxjs": "^7.2.0"
   },
   "devDependencies": {

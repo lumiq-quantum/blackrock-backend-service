@@ -26,6 +26,10 @@ export class AppPagerDutyController {
     return await this.appPagerDutyService.getIncidentsPD();
   }
   
+  @Get('/incidents-request')
+  async getIncidentsRequest() {
+    return await this.appPagerDutyService.getIncidentRequest();
+  }
 
   @Get('/incidents/:id')
   getIncidentById(@Param() params: any) {
