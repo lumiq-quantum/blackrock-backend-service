@@ -7,6 +7,7 @@ import fetch from 'node-fetch';
 import {api} from '@pagerduty/pdjs';
 import * as request from 'request';
 import { firstValueFrom } from 'rxjs';
+import * as dns from 'dns';
 
 
 
@@ -34,10 +35,12 @@ export class AppPagerDutyService {
     } catch (error) {
       console.log("ERROR CREATING PD INSTANCE", error)
     }
+    dns.setDefaultResultOrder('ipv4first');
   }
 
   async getIncidents() {
     try {
+      dns.setDefaultResultOrder('ipv4first');
       const response = await firstValueFrom( 
         this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
           headers: {
@@ -63,7 +66,7 @@ export class AppPagerDutyService {
 
   async getIncidentsFetch() {
     try {
-
+      dns.setDefaultResultOrder('ipv4first');
       const response = await fetch(this.PAGER_DUTY_API_ENDPOINT, {
         agent: this.httpsAgent,
         headers: {
@@ -82,6 +85,7 @@ export class AppPagerDutyService {
   }
 
   async getIncidentsHttps() {
+    dns.setDefaultResultOrder('ipv4first');
     let options = {
       host: 'api.pagerduty.com',
       port: 443,
@@ -109,6 +113,7 @@ export class AppPagerDutyService {
 
   async getIncidentsPD() {
     try {
+      dns.setDefaultResultOrder('ipv4first');
       let data = await this.pd.get('/incidents')
       console.log(data)
       return data.data
@@ -124,6 +129,7 @@ export class AppPagerDutyService {
 
   async getIncidentById(id) {
     try {
+      dns.setDefaultResultOrder('ipv4first');
       const response = await this.httpService.get(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
         headers: {
           "Authorization": this.PAGER_DUTY_TOKEN,
@@ -144,6 +150,7 @@ export class AppPagerDutyService {
 
   async updateIncidentById(id) {
     try {
+      dns.setDefaultResultOrder('ipv4first');
       const response = await this.httpService.put(`${this.PAGER_DUTY_API_ENDPOINT}/${id}`, {
         "incident": {
           "type": "incident",
@@ -170,6 +177,7 @@ export class AppPagerDutyService {
 
   async getIncidentRequest() {
     try {
+      dns.setDefaultResultOrder('ipv4first');
       const options = {
         method: 'GET',
         url: 'https://api.pagerduty.com/incidents',
