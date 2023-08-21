@@ -14,3 +14,6 @@ data:
   HTTPS_PROXY: {{ .Values.httpsProxy }}
   NO_PROXY: {{ .Values.noProxy }}
   ca.cert: {{ .Values.caCert }}
+  PROXY_HOST: {{ .Values.proxyHost }}
+  PROXY_PORT: {{ .Values.proxyPort }}
+  PROXY_PROTOCOL: {{ .Values.proxyProtocol }}

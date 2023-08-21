@@ -6,10 +6,13 @@ pagerDutyUserEmail: "<PAGER-DUTY-USER-EMAIL-ID>"
 serviceNowApiEndpoint: https://dev167427.service-now.com
 serviceNowUsername: "<YOUR-USERNAME-HERE>"
 serviceNowPassword: "<YOUR-PASSWORD-HERE>"
-gateway: "test-gateway"
+gateway: "vishal-gateway"
 host: "'*'"
 image: ghcr.io/lumiq-quantum/blackrock-backend-service:latest
 httpProxy: ''
 httpsProxy: ''
 noProxy: ''
 caCert: '<YOUR-CA-CERTIFICATE>'
+proxyHost: '192.168.1.60'
+proxyPort: 8080
+proxyProtocol: 'http'

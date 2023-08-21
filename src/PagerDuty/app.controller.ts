@@ -11,6 +11,11 @@ export class AppPagerDutyController {
     return await this.appPagerDutyService.getIncidents();
   }
 
+  @Get('/incidents-axios-proxy')
+  async getIncidentsAxiosProxy() {
+    return await this.appPagerDutyService.getIncidentsAxiosProxy();
+  }
+
   @Get('/incidents-fetch')
   async getIncidentsFetch() {
     return await this.appPagerDutyService.getIncidentsFetch();

@@ -70,6 +70,25 @@ spec:
             configMapKeyRef:
               name: blackrock-backend-configmap
               key: NO_PROXY
+
+        - name : PROXY_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: PROXY_HOST
+
+        - name : PROXY_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: PROXY_PORT
+        
+        - name : PROXY_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: blackrock-backend-configmap
+              key: PROXY_PROTOCOL
+
         
         volumeMounts:
         - name: config
