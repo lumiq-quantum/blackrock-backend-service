@@ -11,3 +11,6 @@ data:
   SERVICE_NOW_USERNAME: {{ .Values.serviceNowUsername }}
   SERVICE_NOW_PASSWORD: {{ .Values.serviceNowPassword }}
   ca.cert: {{ .Values.caCert }}
+  PROXY_HOST: {{ .Values.proxyHost }}
+  PROXY_PORT: {{ .Values.proxyPort }}
+  PROXY_PROTOCOL: {{ .Values.proxyProtocol }}

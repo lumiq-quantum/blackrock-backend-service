@@ -27,6 +27,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@pagerduty/pdjs": "^2.2.4",
     "axios": "^1.4.0",
+    "hpagent": "^1.2.0",
     "https": "^1.0.0",
     "node-fetch": "^2.6.11",
     "reflect-metadata": "^0.1.13",

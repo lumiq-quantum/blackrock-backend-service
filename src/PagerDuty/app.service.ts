@@ -9,6 +9,8 @@ import * as request from 'request';
 import { firstValueFrom } from 'rxjs';
 import * as dns from 'dns';
 
+const axios = require("axios");
+const { HttpProxyAgent, HttpsProxyAgent } = require('hpagent')
 
 
 @Injectable()
@@ -18,6 +20,10 @@ export class AppPagerDutyService {
   private PAGER_DUTY_TOKEN = process.env.PAGER_DUTY_TOKEN
   private PAGER_DUTY_USER_EMAIL = process.env.PAGER_DUTY_USER_EMAIL
   private NODE_TLS_REJECT_UNAUTHORIZED = process.env.NODE_TLS_REJECT_UNAUTHORIZED
+  
+  private PROXY_HOST = process.env.PROXY_HOST
+  private PROXY_PORT = process.env.PROXY_PORT
+  private PROXY_PROTOCOL = process.env.PROXY_PROTOCOL
   
   httpsAgent:any;
   pd;
@@ -41,11 +47,17 @@ export class AppPagerDutyService {
   async getIncidents() {
     try {
       dns.setDefaultResultOrder('ipv4first');
+      console.log(this.PAGER_DUTY_API_ENDPOINT, "CHECKING THIS")
       const response = await firstValueFrom( 
         this.httpService.get(this.PAGER_DUTY_API_ENDPOINT, {
           headers: {
             "Authorization": this.PAGER_DUTY_TOKEN,
             "Accept": "application/vnd.pagerduty+json;version=2"
+          },
+          proxy: {
+            host: this.PROXY_HOST,
+            port: parseInt(this.PROXY_PORT),
+            protocol: this.PROXY_PROTOCOL
           },
           httpsAgent: this.httpsAgent
         })
@@ -57,6 +69,45 @@ export class AppPagerDutyService {
         "data": incidents
       }
     } catch (error) {
+      // console.log(error)
+      return {
+        "status": 500,
+        "data": error
+      }
+    }
+  }
+
+  async getIncidentsAxiosProxy() {
+    try {
+      
+      let proxyURI = `${this.PROXY_PROTOCOL}://${this.PROXY_HOST}:${this.PROXY_PORT}`;
+
+      console.log(proxyURI)
+      const httpAgent = new HttpProxyAgent({
+        proxy: proxyURI
+      })
+      const httpsAgent = new HttpsProxyAgent({
+        proxy: proxyURI
+      })
+
+      const myaxios = axios.create({ httpAgent, httpsAgent });
+      // let myaxios = axios.create({httpsAgent});
+      
+
+      const response = await myaxios.get(this.PAGER_DUTY_API_ENDPOINT, {
+        headers: {
+          "Authorization": this.PAGER_DUTY_TOKEN,
+          "Accept": "application/vnd.pagerduty+json;version=2"
+        }
+      });
+
+      const incidents = response?.data
+      return {
+        "status": 200,
+        "data": incidents
+      }
+    } catch (error) {
+      console.log(error)
       return {
         "status": 500,
         "data": error
@@ -185,7 +236,8 @@ export class AppPagerDutyService {
           'Content-Type': 'application/json',
           Accept: 'application/vnd.pagerduty+json;version=2',
           Authorization: this.PAGER_DUTY_TOKEN
-        }
+        },
+        proxy: 'http://192.168.1.60:8080'
       };
       
       let data = await this.requestPackage(options)
