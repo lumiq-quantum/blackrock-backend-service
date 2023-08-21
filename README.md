@@ -25,6 +25,9 @@ $ helm install blackrock-backend-service lumiq/blackrock-backend-service \
     --set gateway="<GATEWAY-NAME>" \
     --set host="'<YOUR-HOST>'" \
     --set image="<DOCKER-IMAGE-LOCATION>"
+    --set proxyHost="<PROXY-HOST-ADDRESS>"
+    --set proxyPort="<PROXY-PORT>"
+    --set proxyProtocol="<PROXY-PROTOCOL http or https>"
     -n lumiq-blackrock
 ```
 
